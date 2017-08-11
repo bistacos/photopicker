@@ -1,6 +1,6 @@
 # iFly Media Purchaser App
 
-A Node app built with Angular, Express, and a lightweight MongoDB backend. For demonstration purposes only.
+A Node app built with Angular, Express, and a lightweight MongoDB backend. For demonstration purposes only.  Angular/Express skeleton cloned from [scotch-io/node-todo](https://github.com/scotch-io/node-todo)
 
 ## Requirements
 
