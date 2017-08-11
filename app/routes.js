@@ -1,57 +1,88 @@
-var Todo = require('./models/todo');
-
-function getTodos(res) {
-    Todo.find(function (err, todos) {
-
-        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-        if (err) {
-            res.send(err);
-        }
-
-        res.json(todos); // return all todos in JSON format
-    });
-};
-
 module.exports = function (app) {
-
     // api ---------------------------------------------------------------------
-    // get all todos
-    app.get('/api/todos', function (req, res) {
-        // use mongoose to get all todos in the database
-        getTodos(res);
+
+    app.get('/api/photos', function (req, res) {
+      getPhotos(function(err, results) {
+        if (err) { res.status(500).json(err) }
+        else { res.status(200).json(results); }
+      });
     });
 
-    // create todo and send back all todos after creation
-    app.post('/api/todos', function (req, res) {
-
-        // create a todo, information comes from AJAX request from Angular
-        Todo.create({
-            text: req.body.text,
-            done: false
-        }, function (err, todo) {
-            if (err)
-                res.send(err);
-
-            // get and return all the todos after you create another
-            getTodos(res);
-        });
-
+    app.post('/api/photos/seed', function (req, res) {
+      seedPhotos(function(err, results) {
+        if (err) { res.status(500).json(err) }
+        else { res.status(200).json(results); }
+      });
     });
 
-    // delete a todo
-    app.delete('/api/todos/:todo_id', function (req, res) {
-        Todo.remove({
-            _id: req.params.todo_id
-        }, function (err, todo) {
-            if (err)
-                res.send(err);
-
-            getTodos(res);
-        });
+    app.post('/api/photos/purchased', function (req, res) {
+      purchasePhotos(req.body.purchasedIds, function(err, results) {
+        if (err) { res.status(500).json(err) }
+        else { res.status(200).json(results); }
+      });
     });
 
-    // application -------------------------------------------------------------
-    app.get('*', function (req, res) {
-        res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    app.delete('/api/photos/all', function (req, res) {
+      clearDb(function(err, results) {
+        if (err) { res.status(500).json(err) }
+        else { res.status(200).json(results); }
+      });
     });
+
+    // DB Querying functions ----------------------------------------------------
+
+    function getPhotos (callback) {
+      // Get the current MongoDB collection
+      var collection = app.db.collection('documents');
+      collection.find({}).toArray(function(err, results) {
+        callback(err, results);
+      });
+    }
+
+    // for the purposes of this demo only. Obviously.
+    function clearDb (callback) {
+      var collection = app.db.collection('documents');
+      collection.deleteMany({}, function(err, results) {
+        console.log("Removed "+results.deletedCount+" records");
+        callback(err, results.ops);
+      });
+    }
+
+    function seedPhotos (callback) {
+      var collection = app.db.collection('documents');
+      collection.insertMany([
+        { id : 1,
+          filename: "che",
+          img_path: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAleAAAAJDRiZDE1ZmI1LWJlMzQtNDU0Yy04ZThkLTBhYzkxMzNiNDZlMA.jpg",
+          purchased: false
+        },
+        { id : 2,
+          filename: "max",
+          img_path: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAcqAAAAJGEzZmE0NjBmLTZlZmEtNDM0MS1hYWZmLWZhZTUxOGI2ZDhhZg.jpg",
+          purchased: false
+        },
+        { id : 3,
+          filename: "tim",
+          img_path: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAfDAAAAJDNjODcxZjM0LTJkYTUtNDk0Yi04ODhkLTM4NWFjMmUyZTg0NA.jpg",
+          purchased: false
+        },
+        { id : 4,
+          filename: "yixin",
+          img_path: "https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/7/000/2c1/308/1fdecf5.jpg",
+          purchased: false
+        }
+      ], function(err, results) {
+        console.log("Seeded the DB with 4 photos");
+        callback(err, results.ops);
+      });
+    }
+
+    function purchasePhotos (photoIds, callback) {
+      if (Array.isArray(photoIds) === false) return callback('Parameter validation error in purchasePhotos()');
+      var collection = app.db.collection('documents');
+      collection.updateMany({ id: { $in: photoIds } }, { $set: { "purchased" : true }}, function(err, results) {
+        console.log("Updated "+results.modifiedCount+" records");
+        callback(err, results.ops);
+      });
+    }
 };

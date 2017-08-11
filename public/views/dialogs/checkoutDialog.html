@@ -1,0 +1,26 @@
+<div class="ngdialog-message">
+  <h4 class="text-md">Please enter your information</h4>
+  <form>
+    <div class="form-group">
+
+      First Name: <input type="text" class="form-control input-md text-center" ng-model="formData.firstName">
+      Last Name: <input type="text" class="form-control input-md text-center" ng-model="formData.lastName">
+      Address: <input type="text" class="form-control input-md text-center" placeholder="123 Ripcord Dr." ng-model="formData.address">
+      Address Line 2: <input type="text" class="form-control input-md text-center" placeholder="Apt 200" ng-model="formData.address2">
+      City: <input type="text" class="form-control input-md text-center" placeholder="Type your city" ng-model="formData.city">
+      State: <select class="form-control" ng-model="formData.state">
+              <option ng-repeat="state in states" value="state">{{state}}</option>
+            </select>
+      Zip: <input type="text" class="form-control input-md text-center" maxlength="5" placeholder="5-digit zip" ng-model="formData.zip">
+      Credit Card Number: <input type="text" class="form-control input-md text-center" placeholder="0123-4455-6677-8899" maxlength="19" ng-model="formData.cardNumber">
+      CCV: <input type="text" tooltip="3-digit code found on the back of your card" maxlength="3" class="form-control input-md text-center" ng-model="formData.ccv">
+      Expiration: <input type="month" ng-model="formData.expiryDate" min="{{'01-1900' | date:'MM-yyyy'}}" max="{{'12-2900' | date:'MM-yyyy'}}" />
+
+    </div>
+  </form>
+</div>
+
+<div class="ngdialog-buttons">
+  <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog('Cancel')">Cancel</button>
+  <button type="button" class="ngdialog-button bg-danger" style="background-color: LimeGreen; color: white;" ng-click="validateInputs()">Purchase</button>
+</div>

@@ -1,0 +1,98 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "ng-dialog@~0.3.11",
+        "scope": null,
+        "escapedName": "ng-dialog",
+        "name": "ng-dialog",
+        "rawSpec": "~0.3.11",
+        "spec": ">=0.3.11 <0.4.0",
+        "type": "range"
+      },
+      "/Users/brian/code/node-todo"
+    ]
+  ],
+  "_from": "ng-dialog@>=0.3.11 <0.4.0",
+  "_id": "ng-dialog@0.3.12",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/ng-dialog",
+  "_npmUser": {
+    "name": "dmitri",
+    "email": "dmitri.voronianski@gmail.com"
+  },
+  "_npmVersion": "1.4.28",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "ng-dialog@~0.3.11",
+    "scope": null,
+    "escapedName": "ng-dialog",
+    "name": "ng-dialog",
+    "rawSpec": "~0.3.11",
+    "spec": ">=0.3.11 <0.4.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng-dialog/-/ng-dialog-0.3.12.tgz",
+  "_shasum": "b33cc3f221867c4cd390240fe4941648ab107cdf",
+  "_shrinkwrap": null,
+  "_spec": "ng-dialog@~0.3.11",
+  "_where": "/Users/brian/code/node-todo",
+  "author": {
+    "name": "Dmitri Voronianski",
+    "email": "dmitri.voronianski@gmail.com",
+    "url": "http://pixelhunter.me"
+  },
+  "bugs": {
+    "url": "https://github.com/likeastore/ngDialog/issues"
+  },
+  "dependencies": {},
+  "description": "Modal dialogs and popups provider for Angular.js applications",
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-cssmin": "^0.9.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-uglify": "~0.2.7",
+    "grunt-myth": "~0.1.0",
+    "myth": "~0.1.6",
+    "network-address": "0.0.4",
+    "strata": "~0.20.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b33cc3f221867c4cd390240fe4941648ab107cdf",
+    "tarball": "https://registry.npmjs.org/ng-dialog/-/ng-dialog-0.3.12.tgz"
+  },
+  "gitHead": "ddca378288f6c3e1e4f1d585939aeeab16f646f1",
+  "homepage": "https://github.com/likeastore/ngDialog",
+  "keywords": [
+    "angular.js",
+    "modals",
+    "popups",
+    "dialog",
+    "ng",
+    "provider",
+    "factory",
+    "directive"
+  ],
+  "license": "MIT",
+  "main": "./js/ngDialog.js",
+  "maintainers": [
+    {
+      "name": "dmitri",
+      "email": "dmitri.voronianski@gmail.com"
+    }
+  ],
+  "name": "ng-dialog",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/likeastore/ngDialog.git"
+  },
+  "scripts": {},
+  "version": "0.3.12"
+}

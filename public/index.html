@@ -1,83 +1,88 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="iFlyPhotoPurchaser">
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-	<title>Node/Angular Todo App</title>
+	<title>Media Purchase</title>
 
-	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
-		#todo-list 				{ margin-bottom:30px; }
-		#todo-form 	 			{ margin-bottom:50px; }
 	</style>
 
-	<!-- SPELLS -->
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
+	<!-- dependencies -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script><!-- load angular -->
 
-	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/services/todos.js"></script> <!-- load our todo service -->
-	<script src="js/core.js"></script> <!-- load our main application -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+	<!-- ngDialog scripts -->
+	<link rel="stylesheet" href="lib/ng-dialog/css/ngDialog.min.css">
+	<link rel="stylesheet" href="lib/ng-dialog/css/ngDialog-theme-default.min.css">
+	<script src="lib/ng-dialog/js/ngDialog.min.js"></script>
+
+	<!-- toaster scripts -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.css" rel="stylesheet" />
+	<script src="https://code.angularjs.org/1.2.0/angular-animate.min.js" ></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angularjs-toaster/1.1.0/toaster.min.js"></script>
+
+  <!-- load up our controller and main application -->
+	<script src="js/controllers/main.js"></script>
+	<script src="js/core.js"></script>
 
 </head>
-<!-- SET THE CONTROLLER -->
+
 <body ng-controller="mainController">
 	<div class="container">
 
-		<!-- HEADER AND TODO COUNT -->
 		<div class="jumbotron text-center">
-			<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+			<img src="/assets/ifly_logo.png" />
+			<h2>You Have {{ photos.length }} Photos Available for Purchase! </h2>
+			<h3>Select as many as you like, then click the 'Check Out' button.</h3>
 		</div>
 
-		<!-- TODO LIST -->
-		<div id="todo-list" class="row">
-			<div class="col-sm-4 col-sm-offset-4">
 
-				
-
-				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-				<div class="checkbox" ng-repeat="todo in todos">
-					<label>
-						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-					</label>
-				</div>
-
-				<p class="text-center" ng-show="loading">
-					<span class="fa fa-spinner fa-spin fa-3x"></span>
-				</p>
-
-			</div>
+		<div id="photos-list" class="row">
+			<div class="table-responsive col-sm-8 col-sm-offset-2">
+        <table class="table">
+          <tbody>
+            <tr ng-repeat="photo in photos" ng-click="toggleSelected(photo)" ng-class="{active: photo.selected, disabled: photo.purchased}" ng-hide="photo.hide">
+							<td><img ng-src="{{photo.img_path}}" style="max-width: 175px; margin-bottom: 10px;" /></td>
+              <td style="color: DarkBlue; text-transform: capitalize; font-size: xx-large; vertical-align: middle;">{{photo.filename}}&nbsp;</td>
+              <td style="font-size: xx-large; vertical-align: middle;">
+              	<em class="fa fa-check" style="color: Crimson;" ng-show="photo.selected && !photo.purchased"></em>
+              	<span style="font-size: xx-large; color: green" ng-show="photo.purchased"><em class="fa fa-flag" style="color: Green;"></em>&nbsp;Purchased!</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 		</div>
 
-		<!-- FORM TO CREATE TODOS -->
-		<div id="todo-form" class="row">
+		<div id="photo-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
-					<div class="form-group">
-
-						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-					</div>
-
-					<!-- createToDo() WILL CREATE NEW TODOS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-disabled="!photos" ng-click="openCheckoutDialog()"><em class="fa fa-shopping-cart">&nbsp;</em> Check Out</button>
 				</form>
 			</div>
 		</div>
 
-		<div class="text-center text-muted">
-			<p>A demo by <a href="http://scotch.io">Scotch</a>.</p>
-			<p>Read the <a href="http://scotch.io/tutorials/javascript/creating-a-single-page-todo-app-with-node-and-angular">tutorial</a>.</p>
+		<div class="text-center text-muted" style="margin-top: 20px;">
+			<p>Click <a href ng-click="startOver()">Here</a> to clear the DB, reseed it, and start the demo over.</p>
+			<p ng-show="!photos">Click <a href ng-click="startOver()">Here</a> to seed the DB and start the demo!</p>
+		</div>
+
+		<div class="text-center text-muted" style="margin-top: 20px;">
+			<p>A demo by <a href="http://github.com/bistacos">Bistacos</a>.</p>
 		</div>
 
 	</div>
+
+	<toaster-container toaster-options="{'close-button':true }"></toaster-container>
 
 </body>
 </html>
