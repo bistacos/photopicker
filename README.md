@@ -14,9 +14,9 @@ A Node app built with Angular, Express, and a lightweight MongoDB backend. For d
 1. Clone the repository: `git clone git@github.com:bistacos/photopicker`
 2. Install the application: `npm install`
 3. [Install MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/).  You'll have to follow the steps detailed on the tutorial page depending on what platform you'll be running it on ([OSX](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/), [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/))
-4. Run MongoDB [OSX](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb) [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition).  This takes a few steps and is a bit of a pain...sorry.
-4. Leave MongoDB running, and in a separate tab start the app server: `node server.js`
-5. View in browser at `http://localhost:8080`
+4. Run MongoDB ([OSX](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb), [Windows](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition)).  This takes a few steps and is a bit of a pain...sorry.
+5. Leave MongoDB running, and in a separate tab start the app server: `node server.js`
+6. View in browser at `http://localhost:8080`
 
 ## Implementation Notes
 
